@@ -1,7 +1,7 @@
 ---
 name: Incredible course
 date: 26.2.2022
-video: <iframe src="https://www.youtube.com/embed/-4sYAi60lOI" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+video: https://www.youtube.com/embed/-4sYAi60lOI
 ---
 # The Perfect Example Course
 This awesome course will teach you how to be just awesome. It is **strongly** recommended
@@ -18,4 +18,5 @@ the material to actually be useful.
 Just some nice text here. What a wonderful finnish flag we got there down below.
 Don't you think? Because I do. Anyway, this works like a dream. What else can you hope for when
 doing stuff like this.
+
 ![Finland Flag](/finland.jpg)

@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 import transformations from "../../markdown/markdownTransformations";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 // Server-Side Imports
 import fs from 'fs';
@@ -24,25 +25,39 @@ const Metadata = ({ name, date }) => (
 )
 
 export default function Course({ metadata, content }) {
+    const { data: session } = useSession();
     const router = useRouter();
 
     // If getStaticPaths gives fallback, show Loading...
     if (router.isFallback) {
         return <h1>Loading...</h1>
     }
-    
+
+    // If the user has logged in
+    if (session) {
+        return (
+            <StyledCourse>
+                <p>Signed in as {session.user.name}</p>
+                <button onClick={() => signOut()}>Sign out</button>
+                <Metadata name={metadata.name} date={metadata.date} />
+                <ReactMarkdown
+                    children={content}
+                    components={transformations(metadata)}
+                    remarkPlugins={[
+                        remarkUnwrapImages,
+                        remarkGfm
+                    ]}
+                />
+            </StyledCourse>
+        )
+    }
+
+    // If the user has not logged in
     return (
-        <StyledCourse>
-            <Metadata name={metadata.name} date={metadata.date} />
-            <ReactMarkdown
-                children={content}
-                components={transformations(metadata)}
-                remarkPlugins={[
-                    remarkUnwrapImages,
-                    remarkGfm
-                ]}
-            />
-        </StyledCourse>
+        <>
+            <p>Not signed in</p>
+            <button onClick={() => signIn()}>Sign in</button>
+        </>
     )
 }
 

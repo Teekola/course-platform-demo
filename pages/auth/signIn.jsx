@@ -1,5 +1,8 @@
 import { getProviders, getSession, signIn } from "next-auth/react";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const StyledFormContainer = styled.div`
     position: absolute;
@@ -13,7 +16,7 @@ const StyledFormContainer = styled.div`
 `
 const StyledForm = styled.form`
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
 
     .form-block {
         display: flex;
@@ -30,29 +33,99 @@ const StyledForm = styled.form`
     .submit {
         padding: .5em 3em;
         border-radius: 10px;
+        margin-top: .5rem;
+    }
+
+    .error-message {
+        color: red;
+        position: absolute;
+        transform: translate(.5em, 3.75rem);
     }
 `
 
 export default function SignIn({ providers }) {
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // SignIn using the "username-login"
-        signIn("username-login", { username: "johndoe", password: "123" });
+    const [validationError, setValidationError] = useState(false);
+    const router = useRouter();
+    const { register, handleSubmit, formState: { errors }, setError, clearErrors, trigger } = useForm({
+        defaultValues: {
+            username: "",
+            password: "",
+        }
+    });
+
+    const handleChange = () => {
+        // If a form field changes, if there is a validation error,
+        // remove it and clear manually set password error
+        if (validationError) {
+            setValidationError(false);
+            clearErrors("password");
+        }
     }
+
+    const handleBlur = (fieldId) => {
+        // Return a function that triggers validation to the field
+        return () => trigger(fieldId);
+    }
+
+
+    const onSubmit = async data => {
+        // If there is still a validation error,
+        // the input has not changed
+        if (validationError) {
+            setError("password", { type: "manual", message: "Invalid username or password.", shouldFocus: true });
+            return;
+        }
+
+        // SignIn using the credentials provider with id="username-login"
+        const { username, password } = data;
+        const response = await signIn("username-login", {
+            redirect: false,
+            username,
+            password
+        });
+
+        // If there are no errors, redirect to the callbackurl given by the response
+        if (response.ok) router.push(response.url);
+
+        // If there was an error, e.g. the username-password combination was not in the database
+        // Set an error
+        if (response.error) {
+            setError("password", { type: "manual", message: "Invalid username or password.", shouldFocus: true });
+            setValidationError(true);
+        }
+    }
+
     return (
         <StyledFormContainer>
             <h1>Sign in</h1>
-            <StyledForm onSubmit={handleSubmit}>
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-block">
                     <label>Username</label>
-                    <input className="input-field" name="username" type="text" />
+                    <input className="input-field" name="username" type="text"
+                        {...register("username", {
+                            required: "Please, type your username.",
+                            onBlur: handleBlur("username"),
+                            onChange: handleChange
+                        })}
+                    />
+                    <p className="error-message">{errors.username?.message}</p>
                 </div>
 
                 <div className="form-block">
-                    <label>Password</label>
-                    <input className="input-field" name="username" type="password" />
+                    <label htmlFor="password">Password</label>
+                    <input className="input-field" name="password" type="password"
+                        {...register("password", {
+                            required: "Please, type your password.",
+                            minLength: {
+                                value: 3,
+                                message: "Your password should have at least 3 characters."
+                            },
+                            onBlur: handleBlur("password"),
+                            onChange: handleChange
+                        })}
+                    />
+                    <p className="error-message">{errors.password?.message}</p>
                 </div>
-
                 <button className="submit" type="submit">Sign in</button>
             </StyledForm>
             {

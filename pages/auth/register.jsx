@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import ButtonCTA from "../../components/ButtonCTA";
 
 const StyledFormContainer = styled.div`
     position: absolute;
@@ -30,12 +31,6 @@ const StyledForm = styled.form`
         border-radius: 10px;
     }
 
-    .submit {
-        padding: .5em 3em;
-        border-radius: 10px;
-        margin-top: .5rem;
-    }
-
     .error-message {
         color: red;
         position: absolute;
@@ -43,7 +38,7 @@ const StyledForm = styled.form`
     }
 `
 
-const WEBSITE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "";
+const WEBSITE_URL = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 
 export default function Register({ providers }) {
     const [validationError, setValidationError] = useState(false);
@@ -174,7 +169,7 @@ export default function Register({ providers }) {
                     />
                     <p className="error-message">{errors.password?.message}</p>
                 </div>
-                <button className="submit" type="submit">Register</button>
+                <ButtonCTA type="submit">Register</ButtonCTA>
             </StyledForm>
             {
                 Object.values(providers).filter(provider => provider.name !== "Sign in").map((provider) => (

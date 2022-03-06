@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import ButtonCTA from "../../components/ButtonCTA";
 
 const StyledFormContainer = styled.div`
     position: absolute;
@@ -28,12 +29,6 @@ const StyledForm = styled.form`
         padding: .25em .5em;
         border: 1px solid gray;
         border-radius: 10px;
-    }
-
-    .submit {
-        padding: .5em 3em;
-        border-radius: 10px;
-        margin-top: .5rem;
     }
 
     .error-message {
@@ -126,7 +121,7 @@ export default function SignIn({ providers }) {
                     />
                     <p className="error-message">{errors.password?.message}</p>
                 </div>
-                <button className="submit" type="submit">Sign in</button>
+                <ButtonCTA type="submit">Sign in</ButtonCTA>
             </StyledForm>
             {
                 Object.values(providers).filter(provider => provider.name !== "Sign in").map((provider) => (

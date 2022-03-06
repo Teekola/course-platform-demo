@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
+const NEXTAUTH_URL = process.env.NODE_ENV === 'development' ? process.env.NEXTAUTH_URL : "";
 
 export default NextAuth({
 	// Configure one or more authentication providers

@@ -145,6 +145,7 @@ export async function getServerSideProps(context) {
     // If already signed in, redirect to the actual page
     const session = await getSession({ req });
     if (session) {
+        console.log("serversideprops session", session);
         return {
             redirect: { destination: query.callbackUrl }
         }

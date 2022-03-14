@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const NEXTAUTH_URL = process.env.NODE_ENV === 'development' ? process.env.NEXTAUTH_URL : process.env.VERCEL_URL;
+const NEXTAUTH_URL = process.env.NODE_ENV === 'development' ? process.env.NEXTAUTH_URL : `https://${process.env.VERCEL_URL}`;
 
 export default NextAuth({
 	// Configure one or more authentication providers
@@ -44,4 +44,4 @@ export default NextAuth({
 	pages: {
 		signIn: '/auth/signIn',
 	},
-});
+})

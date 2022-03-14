@@ -74,12 +74,13 @@ export default function SignIn({ providers }) {
         // SignIn using the credentials provider with id="email-login"
         const { email, password } = data;
         
+        console.log("Before signIn");
         const response = await signIn("email-login", {
             redirect: false,
             email,
             password
         });
-
+        console.log("After signIn");
         // If there are no errors, redirect to the callbackurl given by the response
         if (response.ok) router.push(response.url);
 

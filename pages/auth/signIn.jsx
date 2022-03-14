@@ -81,6 +81,7 @@ export default function SignIn({ providers }) {
             password
         });
         console.log("After signIn");
+        console.log("Response: ", response);
         // If there are no errors, redirect to the callbackurl given by the response
         if (response.ok) router.push(response.url);
 

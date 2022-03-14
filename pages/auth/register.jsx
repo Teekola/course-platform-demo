@@ -90,32 +90,19 @@ export default function Register({ providers }) {
 
         const { email, password } = data;
 
-        // Create salt and hash
-        
-        // Check if the email is available
-        const checkUser = await fetch(`${WEBSITE_URL}/api/users/id?email=${email}`, {
-            method: "GET"
-        });
-
-        const foundUser = await checkUser.json();
-
-        // If a user was found, set error and return
-        if (foundUser.user) {
-            setError("password", { type: "manual", message: "This email is already in use. Do you want to login instead?", shouldFocus: true });
-            setAlreadyInUseError(true);
-            console.log(foundUser);
-            return;
-        }
-
-        // If there was not an existing user, create new one
-        const createUser = await fetch(`${WEBSITE_URL}/api/users`, {
+        // Try to create new user
+        const create_user = await fetch(`${WEBSITE_URL}/api/users`, {
             method: "POST",
-            body: JSON.stringify({ email, password})
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
         });
+        const created_user = await create_user.json();
 
-        // If error occurs in creation, set error
-        if (!createUser.ok) {
-            setError("password", { type: "manual", message: "Failed to create an account. Please provide valid credentials.", shouldFocus: true });
+        // If response status is not ok, set error and return
+        if (!create_user.ok) {
+            setError("password", { type: "manual", message: created_user.message , shouldFocus: true });
             setValidationError(true);
             return;
         }
@@ -123,7 +110,7 @@ export default function Register({ providers }) {
         // SignIn using the credentials provider with id="email-login"
         const response = await signIn("email-login", {
             redirect: false,
-            email,
+            id: created_user.id,
             password
         });
 

@@ -64,7 +64,6 @@ export default function SignIn({ providers }) {
 
 
     const onSubmit = async data => {
-        console.log(data);
         // If there is still a validation error,
         // the input has not changed
         if (validationError) {
@@ -74,6 +73,7 @@ export default function SignIn({ providers }) {
 
         // SignIn using the credentials provider with id="email-login"
         const { email, password } = data;
+        
         const response = await signIn("email-login", {
             redirect: false,
             email,

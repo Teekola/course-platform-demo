@@ -1,0 +1,6 @@
+POST http://localhost:3000/api/users/deleteAll
+Content-Type: application/json
+
+{
+    "signature": "flajfoöw3j890uo9uso8gaio9u8ejjaij3ojgij"
+}

@@ -1,9 +1,9 @@
 import prisma from '../prisma';
 
 // GET
-const getUser = async email => prisma.user.findUnique({
+const getUser = async id => prisma.user.findUnique({
     where: {
-        email: email
+        id
     }
 })
 
@@ -13,8 +13,18 @@ const getUsers = async () => prisma.user.findMany();
 // POST
 
 // Create a new user with the data from the obj
-const createUser = async (obj) => prisma.user.create({
+const createUser = async obj => prisma.user.create({
     data: obj
 });
 
-export { getUser, getUsers, createUser };
+// DELETE
+const deleteUser = async id => prisma.user.delete({
+    where: {
+        id
+    }
+});
+
+
+const deleteAllUsers = async () => prisma.user.deleteMany();
+
+export { getUser, getUsers, createUser, deleteUser, deleteAllUsers };

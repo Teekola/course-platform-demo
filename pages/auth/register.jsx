@@ -115,7 +115,7 @@ export default function Register({ providers }) {
         });
 
         // If there are no errors, redirect to the callbackurl given by the response
-        if (response.ok) router.push(response.url);
+        if (response.ok) router.push(router.query.callbackUrl);
 
         // If there was an error, e.g. the email-password combination was not in the database
         // Set an error

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import fs from 'fs';
 import path from 'path';
 import parseContent from "../../markdown/parseContent";
-import ButtonCTA from "../../components/ButtonCTA";
 import LinkCTA from "../../components/LinkCTA";
 import { useRouter } from "next/router";
 

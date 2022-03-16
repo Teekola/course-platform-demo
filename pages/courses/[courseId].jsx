@@ -34,6 +34,8 @@ export default function Course({ metadata, content }) {
         return <h1>Loading...</h1>
     }
 
+    console.log(session);
+
     // If the user has logged in
     if (session) {
         return (

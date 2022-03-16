@@ -4,7 +4,8 @@ import remarkGfm from 'remark-gfm';
 import transformations from "../../markdown/markdownTransformations";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
+import ButtonCTA from '../../components/ButtonCTA';
 
 // Server-Side Imports
 import fs from 'fs';
@@ -54,10 +55,12 @@ export default function Course({ metadata, content }) {
 
     // If the user has not logged in
     return (
-        <>
-            <p>Not signed in</p>
-            <button onClick={() => signIn()}>Sign in</button>
-        </>
+        <StyledCourse>
+            <h1>{metadata.name}</h1>
+            <p>published <time>{metadata.date}</time></p>
+            <p>price <strong>25 €</strong></p>
+            <ButtonCTA width={300}>Buy</ButtonCTA>
+        </StyledCourse>
     )
 }
 

@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import ButtonCTA from '../components/ButtonCTA';
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 
 const StyledPage = styled.div`
@@ -16,6 +18,12 @@ const StyledHero = styled.div`
 `
 
 const Hero = ({ isSignedIn }) => {
+	const router = useRouter();
+
+	const handleButtonClick = () => {
+		router.push("/auth/signIn?callbackUrl=http://localhost:3000/courses/1", "/signIn");
+	}
+
 	if (isSignedIn) {
 		return (
 			<StyledHero>
@@ -28,7 +36,7 @@ const Hero = ({ isSignedIn }) => {
 	return (
 		<StyledHero>
 			<h1>Welcome to the Course Platform Demo.</h1>
-			<ButtonCTA width={300} onClick={() => signIn()}>Sign in</ButtonCTA>
+			<ButtonCTA width={300} onClick={handleButtonClick}>Sign in</ButtonCTA>
 		</StyledHero>
 	)
 }

@@ -15,6 +15,7 @@ const themeDefault = {
 
     shadows: {
         default: "rgba(0, 0, 0, 0.25) 0px 25px 50px -12px",
+        card: "rgba(0, 0, 0, 0.55) 0px 2px 25px -12px",
     }
 }
 

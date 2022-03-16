@@ -44,4 +44,6 @@ export default NextAuth({
 	pages: {
 		signIn: '/auth/signIn',
 	},
+
+	// TODO: add callbacks to add userId and other userdata to some Contextprovider
 })

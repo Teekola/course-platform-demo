@@ -40,6 +40,8 @@ export default async function handler(req, res) {
     // If the credentials did not match, return unauthorized
     if (!success) return res.status(401).json({ error: "wrong email or password" });
 
+    const courses = [1, 2];
+
     // The credentials matched, return the user object
-    return res.status(200).json({ name: user.name, email: user.email });
+    return res.status(200).json({ id: user.id, name: user.name, email: user.email, courses });
 } 

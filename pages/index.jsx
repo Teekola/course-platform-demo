@@ -22,7 +22,7 @@ const Hero = ({ isSignedIn }) => {
 	const router = useRouter();
 
 	const handleButtonClick = () => {
-		router.push(`/auth/signIn?callbackUrl=${WEBSITE_URL}/courses`, "/signIn");
+		router.push(`/auth/signIn?callbackUrl=${WEBSITE_URL}/courses`);
 	}
 
 	if (isSignedIn) {

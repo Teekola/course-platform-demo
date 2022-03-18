@@ -45,5 +45,18 @@ export default NextAuth({
 		signIn: '/auth/signIn',
 	},
 
-	// TODO: add callbacks to add userId and other userdata to some Contextprovider
+	callbacks: {
+		session: async ({ session, token }) => {
+			if (session?.user) {
+				session.user.id = token.sub;
+			}
+			return session;
+		},
+	},
+
+	session: {
+		strategy: 'jwt'
+	}
+
+	// TODO: add userdata to some Contextprovider
 })

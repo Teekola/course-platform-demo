@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useSession, signOut } from 'next-auth/react';
 import ButtonCTA from '../components/ButtonCTA';
-import Link from "next/link";
 import { useRouter } from "next/router";
+
+const WEBSITE_URL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 
 
 const StyledPage = styled.div`
@@ -21,7 +22,7 @@ const Hero = ({ isSignedIn }) => {
 	const router = useRouter();
 
 	const handleButtonClick = () => {
-		router.push("/auth/signIn?callbackUrl=http://localhost:3000/courses/1", "/signIn");
+		router.push(`/auth/signIn?callbackUrl=${WEBSITE_URL}/courses`, "/signIn");
 	}
 
 	if (isSignedIn) {

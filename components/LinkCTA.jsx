@@ -27,6 +27,10 @@ const StyledA = styled.a`
         transform: scale(.95);
     }
 
+    :focus {
+        outline: 2px solid blue;
+    }
+
     :focus:not(:focus-visible) {
         outline: none;
     }

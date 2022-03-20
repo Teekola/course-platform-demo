@@ -17,10 +17,6 @@ const StyledButton = styled(motion.button)`
     font-weight: bold;
     box-shadow: var(--shadow);
 
-    :focus {
-        outline: 2px solid blue;
-    }
-
     :focus:not(:focus-visible) {
         outline: none;
     }

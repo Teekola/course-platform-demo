@@ -26,6 +26,10 @@ const StyledA = styled.a`
     :active {
         transform: scale(.95);
     }
+
+    :focus:not(:focus-visible) {
+        outline: none;
+    }
 `
 
 export default function LinkCTA({ href, visibleUrl, children }) {
